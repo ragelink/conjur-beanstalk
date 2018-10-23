@@ -1,0 +1,68 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+        "name": "database",
+        "image": "postgres:9.3",
+        "essential": true,
+        "portMappings": [
+            {
+                "containerPort": 5432,
+                "hostPort": 5432
+            }
+        ]
+    },
+    {
+        "name": "conjur",
+        "image": "cyberark/conjur",
+        "essential": true,
+        "command": ["server"],
+        "environment": [
+            {
+                "name": "DATABASE_URL",
+                "value": "postgres://postgres@database/postgres"
+            },
+            {
+                "name": "CONJUR_DATA_KEY",
+                "value": ""
+            }
+        ],
+        "portMappings": [
+            {
+                "containerPort": 80,
+                "hostPort": 8080
+            }
+        ],
+        "links": [
+            "database"
+        ]
+    },
+    {
+        "name": "client",
+        "image": "conjurinc/cli5",
+        "command": ["while", "true;", "do", "sleep", "86400;"],
+        "essential": true,
+        "environment": [
+            {
+                "name": "CONJUR_APPLIANCE_URL",
+                "value": "http://conjur"
+            },
+            {
+                "name": "CONJUR_ACCOUNT",
+                "value": "None"
+            },
+            {
+                "name": "CONJUR_AUTHN_API_KEY",
+                "value": "None"
+            },
+            {
+                "name": "CONJUR_AUTHN_LOGIN",
+                "value": "admin"
+            }
+        ],
+        "links": [
+            "conjur"
+        ]
+    }
+]
+}
