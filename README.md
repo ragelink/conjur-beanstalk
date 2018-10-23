@@ -15,3 +15,10 @@ Steps to get setup:
 4) to test locally: `eb local run -v`
 
 5) to deploy: `eb deploy`
+
+
+Helpful links:
+* https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html
+* https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.html
+* https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_v2config.html
+* https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker-eblocal.html
