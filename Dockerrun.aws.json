@@ -1,7 +1,8 @@
 {
-  "AWSEBDockerrunVersion": 2,
+"AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+        "memoryReservation": 256,
         "name": "database",
         "image": "postgres:9.3",
         "essential": true,
@@ -13,6 +14,7 @@
         ]
     },
     {
+        "memoryReservation": 256,
         "name": "conjur",
         "image": "cyberark/conjur",
         "essential": true,
@@ -38,9 +40,10 @@
         ]
     },
     {
+        "memoryReservation": 256,
         "name": "client",
         "image": "conjurinc/cli5",
-        "command": ["while", "true;", "do", "sleep", "86400;"],
+        "entrypoint": [ "sleep", "infinity" ],
         "essential": true,
         "environment": [
             {
@@ -55,8 +58,7 @@
                 "name": "CONJUR_AUTHN_API_KEY",
                 "value": "None"
             },
-            {
-                "name": "CONJUR_AUTHN_LOGIN",
+            { "name": "CONJUR_AUTHN_LOGIN",
                 "value": "admin"
             }
         ],
