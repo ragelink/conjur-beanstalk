@@ -2,7 +2,7 @@
 "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-        "memoryReservation": 256,
+        "memoryReservation": 1024,
         "name": "database",
         "image": "postgres:9.3",
         "essential": true,
@@ -14,7 +14,7 @@
         ]
     },
     {
-        "memoryReservation": 256,
+        "memoryReservation": 512,
         "name": "conjur",
         "image": "cyberark/conjur",
         "essential": true,
@@ -42,8 +42,8 @@
     {
         "memoryReservation": 256,
         "name": "client",
-        "image": "conjurinc/cli5",
-        "entrypoint": [ "sleep", "infinity" ],
+        "image": "conjur-cli5",
+        "entrypoint": [ "sleep" ],
         "essential": true,
         "environment": [
             {
