@@ -25,9 +25,18 @@ Get an AWS account and setup the beanstalk client
 
 run `eb init` into the console to initialize your application/environment do this in the folder where you have cloned the repo
 
+there are 2 files that you can use depending on the topology of your deployment: Single instance or MultiInstance
+
+```MultiHost-RDS-Dockerrun.aws.json	
+   SingleInstance-Dockerrun.aws.json```
+
+Rename the one you want to Dockerrun.aws.json then test or deploy.
+
 to test locally: `eb local run -v`
 
 to deploy: `eb deploy`
+
+The difference between the two is basically whether you have a small deployment and a single instance of everything will do (pick SingleInstance-Dockerrun.aws.json), however if you want to scale out your environment in an N+1 fashion you can scale out the client/server component and drop the DB inside an RDS configuration and that will scale the DB vertically and then the app tier horizontally. This is probably an easier faster stop gap to deploying the clustered configuration which you may need for extremely highly available environments.
 
 ## Helpful links:
 * https://www.conjur.org
