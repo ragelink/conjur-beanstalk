@@ -42,7 +42,7 @@
     {
         "memoryReservation": 256,
         "name": "client",
-        "image": "conjur-cli5",
+        "image": "ragelink/conjur-cli5",
         "entrypoint": [ "sleep" ],
         "essential": true,
         "environment": [
