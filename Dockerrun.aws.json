@@ -1,0 +1,55 @@
+{
+"AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+        "memoryReservation": 2048,
+        "name": "conjur",
+        "image": "cyberark/conjur",
+        "essential": true,
+        "command": ["server"],
+        "environment": [
+            {
+                "name": "DATABASE_URL",
+                "value": "postgres://${RDS_USERNAME}:${RDS_PASSWORD}@${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}"
+            },
+            {
+                "name": "CONJUR_DATA_KEY",
+                "value": ""
+            }
+        ],
+        "portMappings": [
+            {
+                "containerPort": 80,
+                "hostPort": 8080
+            }
+        ]
+    },
+    {
+        "memoryReservation": 512,
+        "name": "client",
+        "image": "ragelink/conjur-cli5",
+        "entrypoint": [ "sleep" ],
+        "essential": true,
+        "environment": [
+            {
+                "name": "CONJUR_APPLIANCE_URL",
+                "value": "http://conjur"
+            },
+            {
+                "name": "CONJUR_ACCOUNT",
+                "value": "None"
+            },
+            {
+                "name": "CONJUR_AUTHN_API_KEY",
+                "value": "None"
+            },
+            { "name": "CONJUR_AUTHN_LOGIN",
+                "value": "admin"
+            }
+        ],
+        "links": [
+            "conjur"
+        ]
+    }
+]
+}
