@@ -27,16 +27,24 @@ run `eb init` into the console to initialize your application/environment do thi
 
 there are 2 files that you can use depending on the topology of your deployment: Single instance or MultiInstance
 
-```MultiHost-RDS-Dockerrun.aws.json	
-   SingleInstance-Dockerrun.aws.json```
+`templates/MultiHost-RDS-Dockerrun.aws.json	
+ templates/SingleInstance-Dockerrun.aws.json`
+ 
+The default `Dockerrun.aws.json` provided is the MultiHost config, this will require the following:
 
-Rename the one you want to Dockerrun.aws.json then test or deploy.
+1) setup an EBS environment with:
+* load balancing (port 80 -> 8080)
+* SSH (if you're into that sort of thing, helps to troubleshoot)
+* RDS instance (something according to the use and size you want)
+* security group modification to ensure it can talk to containers on port 8080
 
-to test locally: `eb local run -v`
+2) Rename the one you want to Dockerrun.aws.json then test or deploy.
 
-to deploy: `eb deploy`
+3) to test locally: `eb local run -v`
 
-The difference between the two is basically whether you have a small deployment and a single instance of everything will do (pick SingleInstance-Dockerrun.aws.json), however if you want to scale out your environment in an N+1 fashion you can scale out the client/server component and drop the DB inside an RDS configuration and that will scale the DB vertically and then the app tier horizontally. This is probably an easier faster stop gap to deploying the clustered configuration which you may need for extremely highly available environments.
+4) to deploy: `eb deploy`
+
+**Notes** The main difference between the two is basically whether you have a small deployment and a single instance of everything will do (pick SingleInstance-Dockerrun.aws.json), however if you want to scale out your environment in an N+1 fashion you can scale out the client/server component and drop the DB inside an RDS configuration and that will scale the DB vertically and then the app tier horizontally. This is probably an easier faster stop gap to deploying the clustered configuration which you may need for extremely highly available environments.
 
 ## Helpful links:
 * https://www.conjur.org
